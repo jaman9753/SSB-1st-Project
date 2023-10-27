@@ -9,7 +9,7 @@
 <body>
 <h1> login test </h1>
 
-¾î·ÆÀ¾´Ï´Ù.
+´ë°¡¸® »Ç°¢
 
 </body>
 </html>
