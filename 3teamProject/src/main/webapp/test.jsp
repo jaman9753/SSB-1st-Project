@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +8,7 @@
 </head>
 <body>
 	<h1>test.jsp</h1>
-	°³¹ß¿Ï·á
+	ê°œë°œì™„ë£Œ
+	
 </body>
 </html>
