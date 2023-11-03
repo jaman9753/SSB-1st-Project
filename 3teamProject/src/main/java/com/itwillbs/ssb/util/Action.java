@@ -12,6 +12,6 @@ public interface Action {
 	// public /*abstract*/ void method();
 	// public abstract void method2();
 
-	public <ActionForward> ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 }
