@@ -3,31 +3,69 @@ package com.itwillbs.ssb.db;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
 
-public class LoginDAO {
-    private Connection con;
-    private PreparedStatement pstmt;
-    private ResultSet rs;
-    private String sql;
+public class loginDAO {
 
-    // 로그인 메서드
-    public boolean login(String username, String password) {
-        // 로그인 처리를 수행하는 SQL 쿼리를 작성
-        // 이 부분은 로그인 방식에 따라 다를 수 있음
-        
+    private Connection con = null;
+    private PreparedStatement pstmt = null;
+    private ResultSet rs = null;
+    private String sql = "";
+
+    private Connection getCon() throws Exception {
+        Context initCTX = new InitialContext();
+        DataSource ds = (DataSource) initCTX.lookup("java:comp/env/jdbc/ssb");
+        con = ds.getConnection();
+        System.out.println("DAO : 디비연결 성공!!");
+        System.out.println("DAO : " + con);
+        return con;
+    }
+
+    public void CloseDB() {
         try {
-            // 쿼리 실행 및 로그인 검증
-            // 성공 시 true 반환, 실패 시 false 반환
-            // 예시: 쿼리 실행 및 결과를 사용하여 로그인 검증
-            // 또한, 사용자 정보를 세션에 저장할 수도 있음
-
-            return true; // 성공 시 true
+            if (rs != null)
+                rs.close();
+            if (pstmt != null)
+                pstmt.close();
+            if (con != null)
+                con.close();
         } catch (Exception e) {
             e.printStackTrace();
-            return false; // 실패 시 false
-        } finally {
-            // 자원 해제
-            // 예시: con, pstmt, rs를 닫음
         }
+    }
+
+    // 로그인 메서드
+    public boolean login(String member_user_id, String member_pw) {
+        boolean result = false;
+        try {
+            con = getCon();
+            sql = "SELECT * FROM LOGIN WHERE member_user_id = ? AND member_pw = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, member_user_id);
+            pstmt.setString(2, member_pw);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                // 로그인 성공
+                result = true;
+            } else {
+                // 로그인 실패
+                result = false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            CloseDB();
+        }
+        return result;
+    }
+
+    // 다른 메서드 추가
+    // ...
+
+    public static void main(String[] args) {
+        loginDAO dao = new loginDAO();
+        // DAO 객체를 사용하여 원하는 작업 수행
     }
 }

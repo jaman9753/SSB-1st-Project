@@ -1,15 +1,27 @@
 package com.itwillbs.ssb.db;
 
-public class LoginDTO {
-    private String username;
-    private String password;
-    // 필요한 다른 속성 추가
+public class loginDTO {
+    private String member_user_id;
+    private String member_pw;
 
-    // Getter 및 Setter 메서드
+    public String getMember_user_id() {
+        return member_user_id;
+    }
+
+    public void setMember_user_id(String member_user_id) {
+        this.member_user_id = member_user_id;
+    }
+
+    public String getMember_pw() {
+        return member_pw;
+    }
+
+    public void setMember_pw(String member_pw) {
+        this.member_pw = member_pw;
+    }
 
     @Override
     public String toString() {
-        // 객체 정보를 문자열로 반환
-        return "LoginDTO [username=" + username + ", password=" + password + "]";
+        return "loginDTO [member_user_id=" + member_user_id + ", member_pw=" + member_pw + "]";
     }
 }
