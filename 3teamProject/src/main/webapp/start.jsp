@@ -19,7 +19,6 @@
 	
 	    // 실행주소 
 		response.sendRedirect("./CartList.bo?member_id=1");
-		//[ JSP 내장객체 request,response ] 
 	%>
 	
 	

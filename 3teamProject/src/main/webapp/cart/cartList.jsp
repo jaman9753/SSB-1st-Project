@@ -35,40 +35,12 @@
 					<td name="options_value">${dto.options_value }</td>
 					<td name="cart_quantity">${dto.cart_quantity }</td>
 					<td name="options_price">${dto.options_price * dto.cart_quantity }</td>
-					<td><input type="button" value="변경"
-						onclick="changeOption('${dto.cart_id}','${dto.item_id}');"></td>
-					<!-- 체크박스 전체 선택/해제 만들기 -->
-					<td>${dto.options_price * dto.cart_quantity }</td>
 					<!-- 반응형으로 만들기 -->
+					<td><input type="button" value="변경" onclick="changeOption('${dto.cart_id}','${dto.item_id}');"></td>
 				</tr>
 			</c:forEach>
 		</table>
 		<input type="submit" value="주문">
 	</form>
-	<script src="cartList.js"></script>
 </body>
-<script type="text/javascript">
-	var path = window.location.pathname;
-	alert(path);
-	function changeOption(cart_id, item_id) {//제품ID받아오기
-		$.ajax({
-			type : "POST",
-			url : "./cartAJAX.ca",
-			dataType : "text",
-			data : {
-				"item_id" : item_id
-			},
-			error : function() {
-				alert('통신실패!!');
-			},
-			success : function(data) {
-				//alert('통신성공!!');
-				var list = JSON.parse(data);//json 객체로 전환
-				//객체를 사용해 웹에 뿌리기
-				$("[name=cart][value=" + cart_id + "]>[name=options_value]")
-						.text(list[0].options_id);
-			}
-		});
-	}
-</script>
 </html>
