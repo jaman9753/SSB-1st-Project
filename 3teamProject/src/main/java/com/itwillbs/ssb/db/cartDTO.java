@@ -7,7 +7,7 @@ public class cartDTO {
 	private int cart_quantity;//장바구니 구매수량
 	//item테이블
 	private String item_name;//제품이름
-	private String item_img_server;//제품이미지
+	private String item_img_main;//제품이미지
 	//option테이블
 	private int options_id;//옵션ID
 	private String options_name;//옵션이름
@@ -39,11 +39,11 @@ public class cartDTO {
 	public void setItem_name(String item_name) {
 		this.item_name = item_name;
 	}
-	public String getItem_img_server() {
-		return item_img_server;
+	public String getItem_img_main() {
+		return item_img_main;
 	}
-	public void setItem_img_server(String item_img_server) {
-		this.item_img_server = item_img_server;
+	public void setItem_img_main(String item_img_main) {
+		this.item_img_main = item_img_main;
 	}
 	public int getOptions_id() {
 		return options_id;
@@ -79,8 +79,9 @@ public class cartDTO {
 	@Override
 	public String toString() {
 		return "cartDTO [cart_id=" + cart_id + ", item_id=" + item_id + ", cart_quantity=" + cart_quantity
-				+ ", item_name=" + item_name + ", item_img_server=" + item_img_server + ", options_id=" + options_id
+				+ ", item_name=" + item_name + ", item_img_main=" + item_img_main + ", options_id=" + options_id
 				+ ", options_name=" + options_name + ", options_value=" + options_value + ", options_price="
 				+ options_price + ", options_quantity=" + options_quantity + "]";
 	}
+	
 }

@@ -10,10 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.itwillbs.ssb.db.cartDAO;
-<<<<<<< HEAD
 import com.itwillbs.ssb.db.optionsDTO;
-=======
->>>>>>> parent of e5478b5 (20231102)
 import com.itwillbs.ssb.util.Action;
 import com.itwillbs.ssb.util.ActionForward;
 @WebServlet("*.bo")
