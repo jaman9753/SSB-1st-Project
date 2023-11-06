@@ -5,26 +5,30 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Insert title here</title>
+<!-- jquery cnd -->
 <script src="https://code.jquery.com/jquery-3.7.1.js"
 	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
 	crossorigin="anonymous"></script>
+<!-- 자바스크립트 외부파일 -->
 <script src="./cart/cartListJS.js"></script>
 </head>
 <body>
-	<form action="./Order.bo" method="post">
-		<div id="optionSelecter" hidden="">
-			<input type="button" value="X" onclick="optionSelecterClose()">
-			<select id="optionSelecter2" name="optionSelecter2"></select>
-			<input type="number" value="1" name="cart_quantity1">
-			<!-- 아이디 네임 변경하기 -->
-			<input id="changeButton" type="button" value="변경"
-				onclick="changeOptionAction()">
-			<!-- 옵션변경 AJAX 구현하기 -->
-			<input type="button" value="취소" onclick="optionSelecterClose()">
-		</div>
-	</form>
+	<!-- 참고:아이디 네임 변경하기 -->
+	<!-- 옵션 변경창(숨겨져있음) -->
+	<div id="optionSelecter" hidden="">
+		<!-- 창닫기 버튼(추후 css 개선 예정) -->
+		<input type="button" value="X" onclick="optionSelecterClose()">
+		<!-- 옵션 선택 셀렉터 -->
+		<select id="optionSelecter2" name="optionSelecter2"></select>
+		<!-- 갯수 선택 인풋 -->
+		<input type="number" value="1" name="cart_quantity1">
+		
+		<input id="changeButton" type="button" value="변경"
+			onclick="changeOptionAction()">
+		<!-- 옵션변경 AJAX 구현하기 -->
+		<input type="button" value="취소" onclick="optionSelecterClose()">
+	</div>
 	<form action="./Order.bo" method="post">
 		<!-- 임시주소 -->
 		<table border="1px solid black">
