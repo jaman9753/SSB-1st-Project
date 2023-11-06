@@ -16,6 +16,7 @@ public class orderAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String cart_id = request.getParameter("cart_id");
+		System.out.println(cart_id);
 		String cart_quantity = request.getParameter("cart_quantity");
 		String item_options_name = request.getParameter("item_options_name");
 		String item_options_value = request.getParameter("item_options_value");

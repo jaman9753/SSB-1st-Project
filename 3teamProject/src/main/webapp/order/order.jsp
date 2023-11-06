@@ -21,10 +21,10 @@
 			<c:forEach var="dto" items="${dtoArray }">
 				<tr>
 					<td>${dto.item_name }</td>
-					<td>${dto.item_options_name }</td>
-					<td>${dto.item_options_value }</td>
+					<td>${dto.options_name }</td>
+					<td>${dto.options_value }</td>
 					<td>${dto.cart_quantity }</td>
-					<td>${dto.item_price * dto.cart_quantity}</td>
+					<td>${dto.options_price * dto.cart_quantity}</td>
 				</tr>
 			</c:forEach>
 		</table>
