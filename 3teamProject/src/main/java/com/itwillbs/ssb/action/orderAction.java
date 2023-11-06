@@ -20,7 +20,6 @@ public class orderAction implements Action {
 		String item_options_name = request.getParameter("item_options_name");
 		String item_options_value = request.getParameter("item_options_value");
 		cartDAO dao = new cartDAO();
-		int result = dao.updateCart(cart_id,cart_quantity,item_options_name,item_options_value);
 		ArrayList<orderDTO> dtoArray = dao.getOrder(cart_id);
 		
 		request.setAttribute("dtoArray", dtoArray);

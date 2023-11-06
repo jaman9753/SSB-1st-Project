@@ -13,8 +13,8 @@ import com.google.gson.Gson;
 import com.itwillbs.ssb.db.cartDAO;
 import com.itwillbs.ssb.db.optionsDTO;
 
-@WebServlet("/cartAJAX.ca")
-public class cartAJAX extends HttpServlet{
+@WebServlet("*.ca")
+public class cartAJAX extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -23,33 +23,61 @@ public class cartAJAX extends HttpServlet{
 	public cartAJAX() {
 		super();
 	}
-	public void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//GSON생성
-		Gson gson = new Gson();
-		// 정보저장
-		String item_id = request.getParameter("item_id");
-		System.out.println(item_id);
-		
-		cartDAO dao = new cartDAO();
-		List<optionsDTO> list = dao.getOptions(item_id);
-		String listJson = gson.toJson(list);
-		System.out.println(listJson);
 
-		response.setCharacterEncoding("utf-8");
-		response.setContentType("application/json; charset=utf-8");
-		response.getWriter().print(listJson); // 전송이 되는 부분
+	public void doProcess(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// 가상주소
+		String requestURI = request.getRequestURI();
+		System.out.println("\t requestURI : " + requestURI);
+		String CTXPath = request.getContextPath();
+		System.out.println("\t CTXPath : " + CTXPath);
+		String command = requestURI.substring(CTXPath.length());
+		System.out.println("\t command : " + command);
+		// GSON생성
+		Gson gson = new Gson();
+		if (command.equals("/changeOption.ca")) {
+			// 정보저장
+			String item_id = request.getParameter("item_id");
+			System.out.println(item_id);
+			// 정보처리
+			cartDAO dao = new cartDAO();
+			List<optionsDTO> list = dao.getOptions(item_id);
+			String listJson = gson.toJson(list);
+			System.out.println(listJson);
+			// 정보전송
+			response.setCharacterEncoding("utf-8");
+			response.setContentType("application/json; charset=utf-8");
+			response.getWriter().print(listJson); // 전송이 되는 부분
+		} else if (command.equals("/changeOptionAction.ca")) {
+			// 정보저장
+			String option_id = request.getParameter("option_id");
+			String item_id = request.getParameter("item_id");
+			String cart_id = request.getParameter("cart_id");
+			String cart_quantity = request.getParameter("cart_quantity");
+			System.out.println("item_id : " + item_id);
+			System.out.println("option_id : " + option_id);
+			System.out.println("cart_id : " + cart_id);
+			System.out.println("option_quantity : " + cart_quantity);
+			//정보처리
+			cartDAO dao = new cartDAO();
+			int result = dao.updateCart(cart_id,item_id,option_id,cart_quantity);
+			System.out.println(result);
+			response.setCharacterEncoding("utf-8");
+			response.setContentType("application/json; charset=utf-8");
+			response.getWriter().print(result);
+		}
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("cartAJAX doGet()");
-		doProcess(request,response);
+		doProcess(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("cartAJAX doPOST()");
-		doProcess(request,response);
+		doProcess(request, response);
 	}
 
 }

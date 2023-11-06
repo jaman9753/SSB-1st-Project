@@ -103,13 +103,17 @@ public class cartDAO {
 		return dtoArray;
 	}
 
-	public int updateCart(String cart_id, String cart_quantity, String item_options_name, String item_options_value) {
+	public int updateCart(String cart_id, String item_id, String option_id,String cart_quantity) {
 		int result = -1;
 		try {
 			con = getCon();
-			sql = "UPDATE cart SET item_id = (SELECT item_id FROM item WHERE )";
+			sql = "UPDATE cart SET options_id = (SELECT options_id FROM options WHERE item_id = ? AND options_id = ?),cart_quantity = ? WHERE cart_id = ?";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, cart_id);
+			pstmt.setString(1, item_id);
+			pstmt.setString(2, option_id);
+			pstmt.setString(3, cart_quantity);
+			pstmt.setString(4, cart_id);
+			System.out.println(pstmt);
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -145,4 +149,5 @@ public class cartDAO {
 		}
 		return dtoArr;
 	}
+
 }
