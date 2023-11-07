@@ -87,3 +87,53 @@ function changeOptionAction() {//제품ID받아오기 AJAX
 		}
 	});
 }
+function deleteCart() {//장바구니 삭제
+	var member_id = 1;//회원ID
+	var checkArray = new Array();//체크박스값 체크
+	$("input:checkbox[name=cart_id]:checked").each(function(){
+		checkArray.push(this.value);
+	});
+	checkArray= checkArray.toString();
+	//옵션 null값 체크
+	if(member_id==""){
+		alert("로그인 정보를 확인해 주십시오");
+		return;
+	}else if(checkArray==""){
+		alert("제품을 선택해 주십시오");
+		return;
+	}
+	alert(checkArray);
+	//AJAX
+	$.ajax({
+		type: "POST",
+		url: "./deleteCart.ca",
+		dataType: "text",
+		data: {
+			"cart_id": checkArray,
+			"member_id": member_id
+		},
+		error: function() {
+			alert('통신실패!!');
+		},
+		success: function(data) {
+			var result = JSON.parse(data);
+			//옵션 삭제 결과
+			if(result = 1){
+				alert("삭제완료");
+			}else if(result = 0){
+				alert("삭제실패");
+			}else{
+				alert("알수없는 오류");
+			}
+			//페이지 새로고침
+			location.reload();
+		}
+	});
+}
+function arrayData(){//배열 넘기기
+	var checkArray = new Array();
+	$("input:checkbox[name=cart_id]:checked").each(function(){
+		checkArray.push(this.value);
+	});
+	$("#checkArray").val(checkArray);
+}

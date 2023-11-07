@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.itwillbs.ssb.db.cartDAO;
+import com.itwillbs.ssb.db.cartAjaxDAO;
 import com.itwillbs.ssb.db.optionsDTO;
 
 @WebServlet("*.ca")
@@ -40,7 +40,7 @@ public class cartAJAX extends HttpServlet {
 			String item_id = request.getParameter("item_id");
 			System.out.println(item_id);
 			// 정보처리
-			cartDAO dao = new cartDAO();
+			cartAjaxDAO dao = new cartAjaxDAO();
 			List<optionsDTO> list = dao.getOptions(item_id);
 			String listJson = gson.toJson(list);
 			System.out.println(listJson);
@@ -59,8 +59,21 @@ public class cartAJAX extends HttpServlet {
 			System.out.println("cart_id : " + cart_id);
 			System.out.println("option_quantity : " + cart_quantity);
 			//정보처리
-			cartDAO dao = new cartDAO();
+			cartAjaxDAO dao = new cartAjaxDAO();
 			int result = dao.updateCart(cart_id,item_id,option_id,cart_quantity);
+			System.out.println(result);
+			response.setCharacterEncoding("utf-8");
+			response.setContentType("application/json; charset=utf-8");
+			response.getWriter().print(result);
+		} else if (command.equals("/deleteCart.ca")) {
+			// 정보저장
+			String member_id = request.getParameter("member_id");
+			String cart_id = request.getParameter("cart_id");
+			System.out.println("member_id : " + member_id);
+			System.out.println("cart_id : " + cart_id);
+			//정보처리
+			cartAjaxDAO dao = new cartAjaxDAO();
+			int result = dao.deleteCart(cart_id,member_id);
 			System.out.println(result);
 			response.setCharacterEncoding("utf-8");
 			response.setContentType("application/json; charset=utf-8");

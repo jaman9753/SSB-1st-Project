@@ -10,7 +10,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-public class cartDAO {
+public class cartAjaxDAO {
 	// 공통 변수 선언
 	private Connection con = null;
 	private PreparedStatement pstmt = null;
@@ -43,29 +43,24 @@ public class cartDAO {
 		}
 	}
 
-	// 장바구니 목록 조회 메서드
-	public ArrayList<cartDTO> getCart(String member_id) {
-		ArrayList<cartDTO> dtoArray = new ArrayList<cartDTO>();
-		cartDTO dto = null;
+	// 옵션 선택 메서드
+	public ArrayList<optionsDTO> getOptions(String item_id) {
+		ArrayList<optionsDTO> dtoArr = new ArrayList<optionsDTO>();
+		optionsDTO dto = null;
 		try {
 			con = getCon();
-			sql = "SELECT cart_id,C.item_id,cart_quantity,item_name,item_img_main,C.options_id,options_name,options_value,options_price,options_quantity FROM cart C JOIN item I ON C.item_id = I.item_id JOIN options O ON I.item_id = O.item_id AND C.options_id = O.options_id WHERE member_id = ? ORDER BY cart_id";
+			sql = "SELECT options_id,options_name,options_value,options_price,options_quantity FROM options WHERE item_id = ? ORDER BY options_id";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, member_id);
+			pstmt.setString(1, item_id);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				dto = new cartDTO();
-				dto.setCart_id(rs.getInt("cart_id"));
-				dto.setItem_id(rs.getInt("item_id"));
-				dto.setCart_quantity(rs.getInt("cart_quantity"));
-				dto.setItem_name(rs.getString("item_name"));
-				dto.setItem_img_main(rs.getString("item_img_main"));
+				dto = new optionsDTO();
 				dto.setOptions_id(rs.getInt("options_id"));
 				dto.setOptions_name(rs.getString("options_name"));
 				dto.setOptions_value(rs.getString("options_value"));
 				dto.setOptions_price(rs.getInt("options_price"));
 				dto.setOptions_quantity(rs.getInt("options_quantity"));
-				dtoArray.add(dto);
+				dtoArr.add(dto);
 				System.out.println("dto 추가");
 			}
 		} catch (Exception e) {
@@ -73,34 +68,44 @@ public class cartDAO {
 		} finally {
 			CloseDB();
 		}
-		return dtoArray;
-	}
-	//주문 페이지 이동 메서드
-	public ArrayList<orderDTO> getOrder(String cart_id) {
-		ArrayList<orderDTO> dtoArray = new ArrayList<orderDTO>();
-		orderDTO dto = null;
-		try {
-			con = getCon();
-			sql = "SELECT item_name,options_name,options_value,cart_quantity,options_price FROM cart C JOIN item I ON C.item_id = I.item_id JOIN options O ON C.options_id = O.options_id WHERE cart_id IN(" + cart_id + ")";
-			pstmt = con.prepareStatement(sql);
-			System.out.println(pstmt);
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				dto = new orderDTO();
-				dto.setItem_name(rs.getString("item_name"));
-				dto.setOptions_name(rs.getString("options_name"));
-				dto.setOptions_value(rs.getString("options_value"));
-				dto.setCart_quantity(rs.getInt("cart_quantity"));
-				dto.setOptions_price(rs.getInt("options_price"));
-				dtoArray.add(dto);
-				System.out.println("dto 추가");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			CloseDB();
-		}
-		return dtoArray;
+		return dtoArr;
 	}
 
+	// 장바구니 수정 메서드
+	public int updateCart(String cart_id, String item_id, String option_id, String cart_quantity) {
+		int result = -1;
+		try {
+			con = getCon();
+			sql = "UPDATE cart SET options_id = (SELECT options_id FROM options WHERE item_id = ? AND options_id = ?),cart_quantity = ? WHERE cart_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, item_id);
+			pstmt.setString(2, option_id);
+			pstmt.setString(3, cart_quantity);
+			pstmt.setString(4, cart_id);
+			System.out.println(pstmt);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			CloseDB();
+		}
+		return result;
+	}
+	//장바구니 삭제 메서드
+	public int deleteCart(String cart_id,String member_id) {
+		int result = -1;
+		try {
+			con = getCon();
+			sql = "DELETE FROM cart WHERE cart_id IN("+ cart_id +") AND member_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, member_id);
+			System.out.println(pstmt);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			CloseDB();
+		}
+		return result;
+	}
 }
