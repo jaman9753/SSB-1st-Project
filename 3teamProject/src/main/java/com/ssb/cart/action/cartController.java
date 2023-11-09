@@ -9,11 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ssb.location.action.locationAction;
-import com.ssb.location.action.locationDelete;
-import com.ssb.location.action.locationInsertAction;
-import com.ssb.location.action.locationReWrite;
-import com.ssb.location.action.locationReWriteAction;
 import com.ssb.util.Action;
 import com.ssb.util.ActionForward;
 @WebServlet("*.ca")

@@ -9,11 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ssb.location.action.locationAction;
-import com.ssb.location.action.locationDelete;
-import com.ssb.location.action.locationInsertAction;
-import com.ssb.location.action.locationReWrite;
-import com.ssb.location.action.locationReWriteAction;
 import com.ssb.util.Action;
 import com.ssb.util.ActionForward;
 @WebServlet("*.lo")
@@ -51,13 +46,13 @@ public class locationController extends HttpServlet {
 			System.out.println("C : 패턴 1 - DB사용X, 페이지 출력");
 			
 			forward = new ActionForward();
-			forward.setPath("./location/locationInsert.jsp");
+			forward.setPath("./location/locationReWrite.jsp");
 			forward.setRedirect(false);
-		}else if (command.equals("/locationInsertAction.lo")) {
+		}else if (command.equals("/locationInsertAction.lo") || command.equals("/locationReWriteAction.lo")) {
 			System.out.println("C : /locationInsert.lo 호출");
 			System.out.println("C : 패턴 3 - DB사용O, 페이지 출력");
 			
-			action = new locationInsertAction();
+			action = new locationReWriteAction();
 			
 			try {
 				forward = action.execute(request, response);
@@ -78,17 +73,6 @@ public class locationController extends HttpServlet {
 			System.out.println("C : 패턴 3 - DB사용), 페이지 출력");
 			
 			action = new locationReWrite();
-			
-			try {
-				forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}else if (command.equals("/locationReWriteAction.lo")) {
-			System.out.println("C : /locationReWriteAction.lo 호출");
-			System.out.println("C : 패턴 3 - DB사용O, 페이지 출력");
-			
-			action = new locationReWriteAction();
 			
 			try {
 				forward = action.execute(request, response);

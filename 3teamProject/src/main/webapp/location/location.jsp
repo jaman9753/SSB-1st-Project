@@ -20,7 +20,6 @@
 			<th>상세주소</th>
 			<th>배송지이름</th>
 			<th>배송요청사항</th>
-			<th>회원번호(hidden,외래키)</th>
 		</tr>
 		<c:forEach var="dto" items="${dtoArray }">
 			<tr>

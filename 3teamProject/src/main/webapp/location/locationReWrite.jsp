@@ -10,7 +10,7 @@
 	crossorigin="anonymous"></script>
 </head>
 <body>
-	<form action="./locationReWriteAction.lo" method="post">
+	<form action="" method="post">
 		<table>
 			<tr>
 				<td><label>수취인이름 : </label></td>
@@ -49,6 +49,8 @@
 						<option label="파손의 위험이 있는 상품입니다.배송 시 주의해 주세요" value="파손의 위험이 있는 상품입니다.배송 시 주의해 주세요">
 						<option label="직접 입력">
 					</select>
+					<br>
+					<textarea id="directInput" rows="3" cols="40" hidden=""></textarea>
 				</td>
 			</tr>
 		</table>
@@ -59,6 +61,16 @@
 		<input type="button" value="취소" onclick="history.back();">
 	</form>
 	<script type="text/javascript">
+		$(function() {
+			$("#sample6_detailAddress").change(function() {
+				var result = $('#sample6_detailAddress option:selected').attr("label") == '직접 입력';
+				if (result) {//직접입력 체크
+					$("textarea").removeAttr("hidden");
+				}else{
+					$("textarea").attr("hidden","hidden");
+				}
+			});
+		});
 		function sample6_execDaumPostcode() {
 			new daum.Postcode({
 				oncomplete : function(data) {
@@ -106,8 +118,20 @@
 				}
 			}).open();
 		}
-		function validityCheck() {//우편번호,주소 유효성 체크
-			if($("#sample6_postcode").val() == "" || $("#sample6_address").val() == ""){
+		function validityCheck() {//우편번호,주소,배송요청사항 유효성 체크
+			var result = $('#sample6_detailAddress option:selected').attr("label") == '직접 입력';
+		
+			if (result) {//직접 입력 체크
+				$('#sample6_detailAddress option:selected').attr("value",$("#directInput").val());
+			}
+			
+			if ($("input[name=location_id]").val()!="") {//등록,수정 체크
+				$("form").attr("action","./locationReWriteAction.lo");
+			}else{
+				$("form").attr("action","./locationInsertAction.lo");
+			}
+			
+			if($("#sample6_postcode").val() == "" || $("#sample6_address").val() == ""){//우편번호,주소 체크
 				alert("우편번호를 확인해주세요");
 				return false;
 			}

@@ -14,7 +14,13 @@ public class locationReWriteAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// 받은정보저장
 		locationDTO dto = new locationDTO();
-		dto.setLocation_id(Integer.parseInt(request.getParameter("location_id")));
+		boolean location_idCheck = request.getParameter("location_id").equals("");
+		int result;
+		System.out.println(location_idCheck);
+		
+		if (!location_idCheck) {
+			dto.setLocation_id(Integer.parseInt(request.getParameter("location_id")));
+		}
 		dto.setLocation_name(request.getParameter("location_name"));
 		dto.setLocation_phone(request.getParameter("location_phone"));
 		dto.setLocation_postcode(request.getParameter("location_postcode"));
@@ -26,7 +32,11 @@ public class locationReWriteAction implements Action {
 		System.out.println(dto);
 		// 데이터 처리
 		locationDAO dao = new locationDAO();
-		int result = dao.reWriteLocation(dto);
+		if (!location_idCheck) {
+			result = dao.reWriteLocation(dto);
+		}else {
+			result = dao.insertLocation(dto);
+		}
 		System.out.println(result);
 		// 페이지 이동준비
 		ActionForward forward = new ActionForward();
