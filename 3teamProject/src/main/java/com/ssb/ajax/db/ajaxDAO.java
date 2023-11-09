@@ -1,48 +1,12 @@
-package com.ssb.cart.db;
+package com.ssb.ajax.db;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
+import com.ssb.cart.db.optionsDTO;
+import com.ssb.util.DAO;
 
-public class ajaxDAO {
-	// 공통 변수 선언
-	private Connection con = null;
-	private PreparedStatement pstmt = null;
-	private ResultSet rs = null;
-	private String sql = "";
-
-	// 공통) 디비 연결하기(CP)
-	private Connection getCon() throws Exception {
-
-		Context initCTX = new InitialContext();
-		DataSource ds = (DataSource) initCTX.lookup("java:comp/env/jdbc/ssb");
-		con = ds.getConnection();
-
-		System.out.println(" DAO : 디비연결 성공!! ");
-		System.out.println(" DAO : " + con);
-		return con;
-	}
-
-	// 공통) 디비 자원해제
-	public void CloseDB() {
-		try {
-			if (rs != null)
-				rs.close();
-			if (pstmt != null)
-				pstmt.close();
-			if (con != null)
-				con.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
+public class ajaxDAO extends DAO {
+	
 	// 옵션 선택 메서드
 	public ArrayList<optionsDTO> getOptions(String item_id) {
 		ArrayList<optionsDTO> dtoArray = new ArrayList<optionsDTO>();
@@ -91,12 +55,13 @@ public class ajaxDAO {
 		}
 		return result;
 	}
-	//장바구니 삭제 메서드
-	public int deleteCart(String cart_id,String member_id) {
+
+	// 장바구니 삭제 메서드
+	public int deleteCart(String cart_id, String member_id) {
 		int result = -1;
 		try {
 			con = getCon();
-			sql = "DELETE FROM cart WHERE cart_id IN("+ cart_id +") AND member_id = ?";
+			sql = "DELETE FROM cart WHERE cart_id IN(" + cart_id + ") AND member_id = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, member_id);
 			System.out.println(pstmt);

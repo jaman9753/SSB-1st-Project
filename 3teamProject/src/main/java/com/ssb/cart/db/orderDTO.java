@@ -6,6 +6,7 @@ public class orderDTO {
 	private String options_value;
 	private int cart_quantity;
 	private int options_price;
+	private int item_price;
 	
 	public String getItem_name() {
 		return item_name;
@@ -37,10 +38,18 @@ public class orderDTO {
 	public void setOptions_price(int options_price) {
 		this.options_price = options_price;
 	}
+	public int getItem_price() {
+		return item_price;
+	}
+	public void setItem_price(int item_price) {
+		this.item_price = item_price;
+	}
 	
 	@Override
 	public String toString() {
 		return "orderDTO [item_name=" + item_name + ", options_name=" + options_name + ", options_value="
-				+ options_value + ", cart_quantity=" + cart_quantity + ", options_price=" + options_price + "]";
+				+ options_value + ", cart_quantity=" + cart_quantity + ", options_price=" + options_price
+				+ ", item_price=" + item_price + "]";
 	}
+	
 }

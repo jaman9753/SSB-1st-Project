@@ -1,4 +1,4 @@
-package com.ssb.cart.action;
+package com.ssb.location.action;
 
 import java.io.IOException;
 
@@ -9,10 +9,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ssb.location.action.locationAction;
+import com.ssb.location.action.locationDelete;
+import com.ssb.location.action.locationInsertAction;
+import com.ssb.location.action.locationReWrite;
+import com.ssb.location.action.locationReWriteAction;
 import com.ssb.util.Action;
 import com.ssb.util.ActionForward;
-@WebServlet("*.bo")
-public class mainController extends HttpServlet {
+@WebServlet("*.lo")
+public class locationController extends HttpServlet {
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		/*********************** 1. 가상주소 계산 시작 **************************/
@@ -30,30 +35,8 @@ public class mainController extends HttpServlet {
 		ActionForward forward = null;
 		
 		//수정
-		if (command.equals("/CartList.bo")) {
-			System.out.println("C : /CartList.bo 호출");
-			System.out.println("C : 패턴 3 - DB사용O, 페이지 출력");
-			
-			action = new cartAction();
-
-			try {
-				forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}else if (command.equals("/Order.bo")) {
-			System.out.println("C : /Order.bo 호출");
-			System.out.println("C : 패턴 3 - DB사용O, 페이지 출력");
-			
-			action = new orderAction();
-			
-			try {
-				forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}else if (command.equals("/location.bo")) {
-			System.out.println("C : /location.bo 호출");
+		 if (command.equals("/location.lo")) {
+			System.out.println("C : /location.lo 호출");
 			System.out.println("C : 패턴 3 - DB사용O, 페이지 출력");
 			
 			action = new locationAction();
@@ -63,15 +46,15 @@ public class mainController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}else if (command.equals("/locationInsert.bo")) {
-			System.out.println("C : /locationInsert.bo 호출");
+		}else if (command.equals("/locationInsert.lo")) {
+			System.out.println("C : /locationInsert.lo 호출");
 			System.out.println("C : 패턴 1 - DB사용X, 페이지 출력");
 			
 			forward = new ActionForward();
 			forward.setPath("./location/locationInsert.jsp");
 			forward.setRedirect(false);
-		}else if (command.equals("/locationInsertAction.bo")) {
-			System.out.println("C : /locationInsert.bo 호출");
+		}else if (command.equals("/locationInsertAction.lo")) {
+			System.out.println("C : /locationInsert.lo 호출");
 			System.out.println("C : 패턴 3 - DB사용O, 페이지 출력");
 			
 			action = new locationInsertAction();
@@ -81,6 +64,57 @@ public class mainController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}else if (command.equals("/locationTest.lo")) {
+			System.out.println("C : /locationTest.lo 호출");
+			System.out.println("C : 패턴 1 - DB사용X, 페이지 출력");
+			
+			//response.getWriter().print("<script>window.open('./location.lo?member_id=1','location','width=400, height=300, top=10, left=10');</script>");
+			
+			forward = new ActionForward();
+			forward.setPath("./location/locationTest.jsp");
+			forward.setRedirect(false);
+		}else if (command.equals("/locationReWrite.lo")) {
+			System.out.println("C : /locationReWrite.lo 호출");
+			System.out.println("C : 패턴 3 - DB사용), 페이지 출력");
+			
+			action = new locationReWrite();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/locationReWriteAction.lo")) {
+			System.out.println("C : /locationReWriteAction.lo 호출");
+			System.out.println("C : 패턴 3 - DB사용O, 페이지 출력");
+			
+			action = new locationReWriteAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/deleteLocation.lo")) {
+			System.out.println("C : /deleteLocation.lo 호출");
+			System.out.println("C : 패턴 3 - DB사용O, 페이지 출력");
+			
+			action = new locationDelete();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/locationModifyPopup.lo")) {
+			System.out.println("C : /locationModifyPopup.lo 호출");
+			System.out.println("C : 패턴 1 - DB사용X, 페이지 출력");
+			
+			//response.getWriter().print("<script>window.open('./location.lo?member_id=1','location','width=400, height=300, top=10, left=10');</script>");
+			
+			forward = new ActionForward();
+			forward.setPath("./location/locationModifyPopup.jsp");
+			forward.setRedirect(false);
 		}
 
 		/*********************** 2. 가상주소 매핑 끝 **************************/

@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -8,59 +9,66 @@
 <!-- css -->
 <link rel="stylesheet" href="./cart/cartList.css">
 <!-- jquery cnd -->
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-<!-- ÀÚ¹Ù½ºÅ©¸³Æ® ¿ÜºÎÆÄÀÏ -->
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+	crossorigin="anonymous"></script>
+<!-- ìë°”ìŠ¤í¬ë¦½íŠ¸ ì™¸ë¶€íŒŒì¼ -->
 <script src="./cart/cartListJS.js"></script>
 </head>
 <body>
-	<!-- Âü°í:¾ÆÀÌµğ ³×ÀÓ º¯°æÇÏ±â -->
-	<!-- ¿É¼Ç º¯°æÃ¢(¼û°ÜÁ®ÀÖÀ½) -->
+	<!-- ì°¸ê³ :ì•„ì´ë”” ë„¤ì„ ë³€ê²½í•˜ê¸° -->
+	<!-- ì˜µì…˜ ë³€ê²½ì°½(ìˆ¨ê²¨ì ¸ìˆìŒ) -->
 	<div id="optionSelecter" hidden="">
 		<div>
 			<div class="input">
-				<!-- ¿É¼Ç ¼±ÅÃ ¼¿·ºÅÍ -->
+				<!-- ì˜µì…˜ ì„ íƒ ì…€ë ‰í„° -->
 				<select id="chooseOptions"></select>
-				<!-- °¹¼ö ¼±ÅÃ ÀÎÇ² -->
+				<!-- ê°¯ìˆ˜ ì„ íƒ ì¸í’‹ -->
 				<input type="number" id="selectedQuantitiy">
 			</div>
 			<div class="button">
-				<!-- º¯°æ ¹öÆ° -->
-				<input type="button" value="º¯°æ" onclick="updateCart()" id="changeButton">
-				<!-- Ãë¼Ò ¹öÆ° -->
-				<input type="button" value="Ãë¼Ò" onclick="optionSelecterClose()" id="closeButton">
+				<!-- ë³€ê²½ ë²„íŠ¼ -->
+				<input type="button" value="ë³€ê²½" onclick="updateCart()"
+					id="changeButton">
+				<!-- ì·¨ì†Œ ë²„íŠ¼ -->
+				<input type="button" value="ì·¨ì†Œ" onclick="optionSelecterClose()"
+					id="closeButton">
 			</div>
 		</div>
 	</div>
-	<!-- ÁÖ¹® Æû -->
-	<form action="./Order.bo" method="post">
-		<!-- ÀÓ½ÃÁÖ¼Ò -->
+	<!-- ì£¼ë¬¸ í¼ -->
+	<form action="./Order.ca" method="post">
+		<!-- ì„ì‹œì£¼ì†Œ -->
 		<table border="1px solid black">
 			<tr>
 				<th><input type="checkbox" checked="checked" id="checkAll"></th>
-				<th>ÀÌ¹ÌÁöÁÖ¼Ò</th>
-				<th>Á¦Ç°ID</th>
-				<th>Á¦Ç° ÀÌ¸§</th>
-				<th>¿É¼Ç</th>
-				<th>Àå¹Ù±¸´Ï ¼ö·®</th>
-				<th>°¡°İ</th>
+				<th>ì´ë¯¸ì§€ì£¼ì†Œ</th>
+				<th>ì œí’ˆID</th>
+				<th>ì œí’ˆ ì´ë¦„</th>
+				<th>ì˜µì…˜</th>
+				<th>ì¥ë°”êµ¬ë‹ˆ ìˆ˜ëŸ‰</th>
+				<th>ê°€ê²©</th>
 				<th></th>
 			</tr>
 			<c:forEach var="dto" items="${dtoArray }">
 				<tr name="cart" value="${dto.cart_id }">
-					<td><input type="checkbox" name="cart_id" value="${dto.cart_id }" checked="checked"></td>
-					<td><img alt="Á¦Ç°ÀÌ¹ÌÁö" src="${dto.item_img_main }"></td>
+					<td><input type="checkbox" name="cart_id"
+						value="${dto.cart_id }" checked="checked"></td>
+					<td><img alt="ì œí’ˆì´ë¯¸ì§€" src="${dto.item_img_main }"></td>
 					<td name="item_id">${dto.item_id }</td>
 					<td name="item_name">${dto.item_name }</td>
 					<td name="options_value">${dto.options_value }</td>
 					<td name="cart_quantity">${dto.cart_quantity }</td>
-					<td name="options_price">${dto.options_price * dto.cart_quantity }</td>
-					<td><input type="button" value="º¯°æ" onclick="getOptions('${dto.cart_id}','${dto.item_id}','${dto.cart_quantity}');"></td>
+					<td name="options_price">${(dto.item_price + dto.options_price) * dto.cart_quantity }</td>
+					<td><input type="button" value="ë³€ê²½"
+						onclick="getOptions('${dto.cart_id}','${dto.item_id}','${dto.cart_quantity}');"></td>
 				</tr>
 			</c:forEach>
 		</table>
-		<input type="hidden" id="checkArray" name="checkArray">
-		<input type="button" value="»èÁ¦" onclick="deleteCart()">
-		<input type="submit" value="ÁÖ¹®" onclick="arrayData()">
+		<input type="hidden" id="checkArray" name="checkArray"> <input
+			type="button" value="ì‚­ì œ" onclick="deleteCart()"> <input
+			type="submit" value="ì£¼ë¬¸" onclick="arrayData()">
+			<label id="totalPrice">options_price</label>
 	</form>
 </body>
 </html>

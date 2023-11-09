@@ -1,9 +1,9 @@
-package com.ssb.cart.action;
+package com.ssb.location.action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ssb.cart.db.cartDAO;
+import com.ssb.location.db.locationDAO;
 import com.ssb.location.db.locationDTO;
 import com.ssb.util.Action;
 import com.ssb.util.ActionForward;
@@ -22,13 +22,14 @@ public class locationInsertAction implements Action {
 		dto.setLocation_title(request.getParameter("location_title"));
 		dto.setLocation_requested(request.getParameter("location_requested"));
 		dto.setMember_id(Integer.parseInt(request.getParameter("member_id")));//세션에서 받아오기
+		System.out.println(dto);
 		// 데이터 처리
-		cartDAO dao = new cartDAO();
+		locationDAO dao = new locationDAO();
 		int result = dao.insertLocation(dto);
 		System.out.println(result);
 		// 페이지 이동준비
 		ActionForward forward = new ActionForward();
-		forward.setPath("/location.bo?"+request.getParameter("member_id"));
+		forward.setPath("/location.lo?"+request.getParameter("member_id"));
 		forward.setRedirect(false);
 
 		return forward;

@@ -1,56 +1,18 @@
 package com.ssb.cart.db;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
+import com.ssb.util.DAO;
 
-import com.ssb.location.db.locationDTO;
-
-public class cartDAO {
-	// 공통 변수 선언
-	private Connection con = null;
-	private PreparedStatement pstmt = null;
-	private ResultSet rs = null;
-	private String sql = "";
-
-	// 공통) 디비 연결하기(CP)
-	private Connection getCon() throws Exception {
-		Context initCTX = new InitialContext();
-		DataSource ds = (DataSource) initCTX.lookup("java:comp/env/jdbc/ssb");
-		con = ds.getConnection();
-
-		System.out.println(" DAO : 디비연결 성공!! ");
-		System.out.println(" DAO : " + con);
-		return con;
-	}
-
-	// 공통) 디비 자원해제
-	public void CloseDB() {
-		try {
-			if (rs != null)
-				rs.close();
-			if (pstmt != null)
-				pstmt.close();
-			if (con != null)
-				con.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
+public class cartDAO extends DAO{
+	
 	// 장바구니 목록 조회 메서드
 	public ArrayList<cartDTO> getCart(String member_id) {
 		ArrayList<cartDTO> dtoArray = new ArrayList<cartDTO>();
 		cartDTO dto = null;
 		try {
 			con = getCon();
-			sql = "SELECT cart_id,C.item_id,cart_quantity,item_name,item_img_main,C.options_id,options_name,options_value,options_price,options_quantity FROM cart C JOIN item I ON C.item_id = I.item_id JOIN options O ON I.item_id = O.item_id AND C.options_id = O.options_id WHERE member_id = ? ORDER BY cart_id";
+			sql = "SELECT cart_id,C.item_id,cart_quantity,item_name,item_img_main,item_price,C.options_id,options_name,options_value,options_price,options_quantity FROM cart C JOIN item I ON C.item_id = I.item_id JOIN options O ON I.item_id = O.item_id AND C.options_id = O.options_id WHERE member_id = ? ORDER BY cart_id";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, member_id);
 			System.out.println("전송된 쿼리 : " + pstmt);
@@ -62,6 +24,7 @@ public class cartDAO {
 				dto.setCart_quantity(rs.getInt("cart_quantity"));
 				dto.setItem_name(rs.getString("item_name"));
 				dto.setItem_img_main(rs.getString("item_img_main"));
+				dto.setItem_price(rs.getInt("item_price"));
 				dto.setOptions_id(rs.getInt("options_id"));
 				dto.setOptions_name(rs.getString("options_name"));
 				dto.setOptions_value(rs.getString("options_value"));
@@ -84,8 +47,7 @@ public class cartDAO {
 		orderDTO dto = null;
 		try {
 			con = getCon();
-			sql = "SELECT item_name,options_name,options_value,cart_quantity,options_price FROM cart C JOIN item I ON C.item_id = I.item_id JOIN options O ON C.options_id = O.options_id WHERE cart_id IN("
-					+ cart_id + ")";
+			sql = "SELECT item_name,options_name,options_value,cart_quantity,item_price,options_price FROM cart C JOIN item I ON C.item_id = I.item_id JOIN options O ON C.options_id = O.options_id WHERE cart_id IN(" + cart_id + ")";
 			pstmt = con.prepareStatement(sql);
 			System.out.println("전송된 쿼리 : " + pstmt);
 			rs = pstmt.executeQuery();
@@ -95,6 +57,7 @@ public class cartDAO {
 				dto.setOptions_name(rs.getString("options_name"));
 				dto.setOptions_value(rs.getString("options_value"));
 				dto.setCart_quantity(rs.getInt("cart_quantity"));
+				dto.setItem_price(rs.getInt("item_price"));
 				dto.setOptions_price(rs.getInt("options_price"));
 				dtoArray.add(dto);
 				System.out.println("dto 추가");
@@ -105,63 +68,5 @@ public class cartDAO {
 			CloseDB();
 		}
 		return dtoArray;
-	}
-	
-	//배송지 조회 메서드
-	public ArrayList<locationDTO> getlocation(String member_id) {
-		ArrayList<locationDTO> dtoArray = new ArrayList<locationDTO>();
-		locationDTO dto = null;
-		try {
-			con = getCon();
-			sql = "SELECT * FROM location WHERE member_id = ?";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, member_id);
-			System.out.println("전송된 쿼리 : " + pstmt);
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				dto = new locationDTO();
-				dto.setLocation_id(rs.getInt("location_id"));
-				dto.setLocation_name(rs.getString("location_name"));
-				dto.setLocation_phone(rs.getString("location_phone"));
-				dto.setLocation_postcode(rs.getString("location_postcode"));
-				dto.setLocation_add(rs.getString("location_add"));
-				dto.setLocationD_add(rs.getString("locationD_add"));
-				dto.setLocation_title(rs.getString("location_title"));
-				dto.setLocation_requested(rs.getString("location_requested"));
-				dto.setMember_id(rs.getInt("member_id"));
-				dtoArray.add(dto);
-				System.out.println("dto 추가");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			CloseDB();
-		}
-		return dtoArray;
-	}
-	
-	//배송지 등록 메서드
-	public int insertLocation(locationDTO dto) {
-		int result = -1;
-		try {
-			con = getCon();
-			sql = "INSERT INTO location VALUES(DEFAULT,?,?,?,?,?,?,?,?)";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, dto.getLocation_name());
-			pstmt.setString(2, dto.getLocation_phone());
-			pstmt.setString(3, dto.getLocation_postcode());
-			pstmt.setString(4, dto.getLocation_add());
-			pstmt.setString(5, dto.getLocationD_add());
-			pstmt.setString(6, dto.getLocation_title());
-			pstmt.setString(7, dto.getLocation_requested());
-			pstmt.setInt(8, dto.getMember_id());
-			System.out.println("전송된 쿼리 : " + pstmt);
-			result = pstmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			CloseDB();
-		}
-		return result;
 	}
 }

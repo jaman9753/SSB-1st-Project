@@ -1,45 +1,128 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="https://code.jquery.com/jquery-3.7.1.js"
+	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+	crossorigin="anonymous"></script>
 </head>
 <body>
-	<form action="./locationInsertAction.bo">
+	<form action="./locationInsertAction.lo" method="post">
 		<table>
 			<tr>
-				<td><label>�������̸� : </label></td>
-				<td><input type="text" name="location_name"></td>
+				<td><label>수취인이름 : </label></td>
+				<td><input type="text" name="location_name" placeholder="수취인 성함" required="required"></td>
 			</tr>
 			<tr>
-				<td><label>��������ȭ��ȣ : </label></td>
-				<td><input type="tel" name="location_phone"></td>
+				<td><label>수취인전화번호 : </label></td>
+				<td><input type="tel" name="location_phone" placeholder="수취인 전화번호" required="required"></td>
 			</tr>
 			<tr>
-				<td><label>�����������ȣ : </label></td>
-				<td><input type="number" name="location_postcode"></td>
+				<td><label>배송지우편번호 : </label></td>
+				<td><input type="text" id="sample6_postcode" placeholder="우편번호"
+					name="location_postcode" readonly="readonly"></td>
+				<td><input type="button" onclick="sample6_execDaumPostcode()"
+					value="우편번호 찾기"></td>
 			</tr>
 			<tr>
-				<td><label>�ּ� : </label></td>
-				<td><input type="text" name="location_add"></td>
+				<td><label>주소 : </label></td>
+				<td><input type="text" id="sample6_address" placeholder="주소"
+					name="location_add" readonly="readonly"></td>
 			</tr>
 			<tr>
-				<td><label>���ּ� : </label></td>
-				<td><input type="text" name="locationD_add"></td>
+				<td><label>상세주소 : </label></td>
+				<td><input type="text" id="sample6_extraAddress"
+					placeholder="상세주소" name="locationD_add" required="required"></td>
 			</tr>
 			<tr>
-				<td><label>������̸� : </label></td>
-				<td><input type="text" name="location_title"></td>
+				<td><label>배송지이름 : </label></td>
+				<td><input type="text" name="location_title" placeholder="배송지 이름" required="required"></td>
 			</tr>
 			<tr>
-				<td><label>��ۿ�û���� : </label></td>
-				<td><input type="text" name="location_requested"></td>
+				<td><label>배송요청사항 : </label></td>
+				<td>
+					<select id="sample6_detailAddress" name="location_requested">
+						<option label="배송 시 요청사항을 선택해주세요" selected="selected">
+						<option label="부재시 경비실에 맞겨주세요" value="부재 시 경비실에 맞겨주세요">
+						<option label="부재 시 택배함에 넣어주세요" value="부재 시 택배함에 넣어주세요">
+						<option label="부재 시 집 앞에 놓아주세요" value="부재 시 집 앞에 놓아주세요">
+						<option label="배송 전 연락 바랍니다" value="배송 전 연락 바랍니다">
+						<option label="파손의 위험이 있는 상품입니다.배송 시 주의해 주세요" value="파손의 위험이 있는 상품입니다.배송 시 주의해 주세요">
+						<option label="직접 입력">
+					</select>
+				</td>
 			</tr>
 		</table>
-		<input type="hidden" name="member_id" value="1"><!-- ���ǿ��� ȸ��ID �޾ƿ��� �ٲٱ� -->
-		<input type="submit" value="���">
+		<input type="hidden" name="member_id" value="1">
+		<!-- 세션에서 회원ID 받아오게 바꾸기 -->
+		<input type="submit" value="등록" onclick="return validityCheck()">
+		<input type="button" value="취소" onclick="history.back();">
 	</form>
+	<script type="text/javascript">
+		function sample6_execDaumPostcode() {
+			new daum.Postcode(
+					{
+						oncomplete : function(data) {
+							// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+							// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+							// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+							var addr = ''; // 주소 변수
+							var extraAddr = ''; // 참고항목 변수
+
+							//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+							if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+								addr = data.roadAddress;
+							} else { // 사용자가 지번 주소를 선택했을 경우(J)
+								addr = data.jibunAddress;
+							}
+
+							// 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+							if (data.userSelectedType === 'R') {
+								// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+								// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+								if (data.bname !== ''
+										&& /[동|로|가]$/g.test(data.bname)) {
+									extraAddr += data.bname;
+								}
+								// 건물명이 있고, 공동주택일 경우 추가한다.
+								if (data.buildingName !== ''
+										&& data.apartment === 'Y') {
+									extraAddr += (extraAddr !== '' ? ', '
+											+ data.buildingName
+											: data.buildingName);
+								}
+								// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+								if (extraAddr !== '') {
+									extraAddr = ' (' + extraAddr + ')';
+								}
+								// 조합된 참고항목을 해당 필드에 넣는다.
+								document.getElementById("sample6_extraAddress").value = extraAddr;
+
+							} else {
+								document.getElementById("sample6_extraAddress").value = '';
+							}
+
+							// 우편번호와 주소 정보를 해당 필드에 넣는다.
+							document.getElementById('sample6_postcode').value = data.zonecode;
+							document.getElementById("sample6_address").value = addr;
+							// 커서를 상세주소 필드로 이동한다.
+							document.getElementById("sample6_extraAddress")
+									.focus();
+						}
+					}).open();
+		}
+		function validityCheck() {//우편번호,주소 유효성 체크
+			if($("#sample6_postcode").val() == "" || $("#sample6_address").val() == ""){
+				alert("우편번호를 확인해주세요");
+				return false;
+			}
+		}
+	</script>
 </body>
 </html>
