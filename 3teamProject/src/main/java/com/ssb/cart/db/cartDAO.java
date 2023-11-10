@@ -69,4 +69,44 @@ public class cartDAO extends DAO{
 		}
 		return dtoArray;
 	}
+	//옵션 재고 감소 메서드
+	public void decreaseQuantity(String cart_idArr) {
+		String[] cart_idArray = cart_idArr.split(",");
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		try {
+			con = getCon();
+			for (String cart_id : cart_idArray) {
+				sql = "UPDATE options SET options_quantity = options_quantity - (SELECT cart_quantity FROM cart WHERE cart_id = ?) WHERE options_id = (SELECT options_id FROM cart WHERE cart_id = ?)";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, Integer.parseInt(cart_id));
+				pstmt.setInt(2, Integer.parseInt(cart_id));
+				System.out.println("전송된 쿼리 : " + pstmt);
+				result.add(pstmt.executeUpdate());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			CloseDB();
+		}
+	}
+	//옵션 재고 증가 메서드
+	public void increaseQuantity(String cart_idArr) {
+		String[] cart_idArray = cart_idArr.split(",");
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		try {
+			con = getCon();
+			for (String cart_id : cart_idArray) {
+				sql = "UPDATE options SET options_quantity = options_quantity + (SELECT cart_quantity FROM cart WHERE cart_id = ?) WHERE options_id = (SELECT options_id FROM cart WHERE cart_id = ?)";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, Integer.parseInt(cart_id));
+				pstmt.setInt(2, Integer.parseInt(cart_id));
+				System.out.println("전송된 쿼리 : " + pstmt);
+				result.add(pstmt.executeUpdate());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			CloseDB();
+		}
+	}
 }

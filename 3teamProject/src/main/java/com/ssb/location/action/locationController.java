@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ssb.util.Action;
 import com.ssb.util.ActionForward;
+import com.ssb.util.JSMoveFunction;
+
 @WebServlet("*.lo")
 public class locationController extends HttpServlet {
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -48,6 +50,7 @@ public class locationController extends HttpServlet {
 			forward = new ActionForward();
 			forward.setPath("./location/locationReWrite.jsp");
 			forward.setRedirect(false);
+			
 		}else if (command.equals("/locationInsertAction.lo") || command.equals("/locationReWriteAction.lo")) {
 			System.out.println("C : /locationInsert.lo 호출");
 			System.out.println("C : 패턴 3 - DB사용O, 페이지 출력");
@@ -68,6 +71,7 @@ public class locationController extends HttpServlet {
 			forward = new ActionForward();
 			forward.setPath("./location/locationTest.jsp");
 			forward.setRedirect(false);
+			
 		}else if (command.equals("/locationReWrite.lo")) {
 			System.out.println("C : /locationReWrite.lo 호출");
 			System.out.println("C : 패턴 3 - DB사용), 페이지 출력");

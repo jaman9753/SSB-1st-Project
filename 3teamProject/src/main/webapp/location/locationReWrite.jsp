@@ -8,6 +8,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"
 	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
 	crossorigin="anonymous"></script>
+<link rel="stylesheet" href="./location/locationReWrite.css">
 </head>
 <body>
 	<form action="" method="post">
@@ -18,20 +19,29 @@
 			</tr>
 			<tr>
 				<td><label>수취인전화번호 : </label></td>
-				<td><input type="tel" name="location_phone" placeholder="수취인 전화번호" value="${dto.location_phone}" required="required"></td>
+				<td>
+					<!-- <input type="tel" name="location_phone" placeholder="수취인 전화번호" value="${dto.location_phone}" required="required"> -->
+					<input id="location_phone0" type="text" name="location_phone[]" pattern="\d*" maxlength="3" value="${dto.location_phone.substring(0,3)}" required="required">
+					<label> - </label>
+					<input id="location_phone1" type="text" name="location_phone[]" pattern="\d*" maxlength="4" value="${dto.location_phone.substring(3,7)}" required="required">
+					<label> - </label>
+					<input id="location_phone2" type="text" name="location_phone[]" pattern="\d*" maxlength="4" value="${dto.location_phone.substring(7,11)}" required="required">
+				</td>
 			</tr>
 			<tr>
 				<td><label>배송지우편번호 : </label></td>
-				<td><input type="text" id="sample6_postcode" placeholder="우편번호" name="location_postcode" readonly="readonly"></td>
-				<td><input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"></td>
+				<td>
+					<input type="text" id="sample6_postcode" placeholder="우편번호" name="location_postcode" value="${dto.location_postcode}" readonly="readonly">
+					<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+				</td>
 			</tr>
 			<tr>
 				<td><label>주소 : </label></td>
-				<td><input type="text" id="sample6_address" placeholder="주소" name="location_add" readonly="readonly"></td>
+				<td><input type="text" id="sample6_address" placeholder="주소" name="location_add" value="${dto.location_add}" readonly="readonly"></td>
 			</tr>
 			<tr>
 				<td><label>상세주소 : </label></td>
-				<td><input type="text" id="sample6_extraAddress" placeholder="상세주소" name="locationD_add"  required="required"></td>
+				<td><input type="text" id="sample6_extraAddress" placeholder="상세주소" name="locationD_add" value="${dto.locationD_add}"  required="required"></td>
 			</tr>
 			<tr>
 				<td><label>배송지이름 : </label></td>
@@ -56,6 +66,7 @@
 		</table>
 		<input type="hidden" name="member_id" value="1">
 		<input type="hidden" name="location_id" value="${dto.location_id}">
+		<input type="hidden" name="location_phone">
 		<!-- 세션에서 회원ID 받아오게 바꾸기 -->
 		<input type="submit" value="등록" onclick="return validityCheck()">
 		<input type="button" value="취소" onclick="history.back();">
@@ -71,7 +82,7 @@
 				}
 			});
 		});
-		function sample6_execDaumPostcode() {
+		function sample6_execDaumPostcode() {//카카오 주소API
 			new daum.Postcode({
 				oncomplete : function(data) {
 					// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
@@ -121,6 +132,21 @@
 		function validityCheck() {//우편번호,주소,배송요청사항 유효성 체크
 			var result = $('#sample6_detailAddress option:selected').attr("label") == '직접 입력';
 		
+			var phoneArr = new Array();//전화번호 유효성 체크
+			var phone0 = $("input[name='location_phone[]']")[0].value;
+			var phone1 = $("input[name='location_phone[]']")[1].value;
+			var phone2 = $("input[name='location_phone[]']")[2].value;
+			
+			if (phone0.length < 3 || phone1.length < 4 || phone2.length < 4) {//전화번호 유효성 체크
+				alert("유효하지 않은 전화번호");
+				return false;
+			}else{
+				for (var i = 0; i < 3; i++) {
+					phoneArr.push($("input[name='location_phone[]']")[i].value);
+				}
+				$("input[name='location_phone']").attr("value",phoneArr.join(""));
+			}
+			
 			if (result) {//직접 입력 체크
 				$('#sample6_detailAddress option:selected').attr("value",$("#directInput").val());
 			}
