@@ -8,10 +8,10 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"
 	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
 	crossorigin="anonymous"></script>
-<link rel="stylesheet" href="./location/locationReWrite.css">
+<link rel="stylesheet" href="./location/locationInsert.css">
 </head>
 <body>
-	<form action="" method="post">
+	<form action="./locationInsertAction.lo" method="post">
 		<table>
 			<tr>
 				<td><label>수취인이름 : </label></td>
@@ -149,12 +149,6 @@
 			
 			if (result) {//직접 입력 체크
 				$('#sample6_detailAddress option:selected').attr("value",$("#directInput").val());
-			}
-			
-			if ($("input[name=location_id]").val()!="") {//등록,수정 체크
-				$("form").attr("action","./locationReWriteAction.lo");
-			}else{
-				$("form").attr("action","./locationInsertAction.lo");
 			}
 			
 			if($("#sample6_postcode").val() == "" || $("#sample6_address").val() == ""){//우편번호,주소 체크
