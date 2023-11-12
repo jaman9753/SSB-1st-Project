@@ -8,7 +8,7 @@ import com.ssb.location.db.locationDTO;
 import com.ssb.util.Action;
 import com.ssb.util.ActionForward;
 
-public class locationReWriteAction implements Action {
+public class locationInsertAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -33,7 +33,7 @@ public class locationReWriteAction implements Action {
 		// 데이터 처리
 		locationDAO dao = new locationDAO();
 		if (!location_idCheck) {
-			result = dao.reWriteLocation(dto);
+			result = dao.rewriteLocation(dto);
 		}else {
 			result = dao.insertLocation(dto);
 		}

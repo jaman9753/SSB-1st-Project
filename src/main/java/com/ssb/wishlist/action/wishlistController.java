@@ -1,4 +1,4 @@
-package com.ssb.location.action;
+package com.ssb.wishlist.action;
 
 import java.io.IOException;
 
@@ -12,9 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.ssb.util.Action;
 import com.ssb.util.ActionForward;
 
-@WebServlet("*.lo")
-public class locationController extends HttpServlet {
-	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+@WebServlet("*.wl")
+public class wishlistController extends HttpServlet {
+	protected void doProcess(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 		/*********************** 1. 가상주소 계산 시작 **************************/
 		String requestURI = request.getRequestURI();
@@ -29,47 +30,14 @@ public class locationController extends HttpServlet {
 		System.out.println("C : 2. 가상주소 매핑 시작------------------");
 		Action action = null;
 		ActionForward forward = null;
-		
-		//수정
-		 if (command.equals("/location.lo")) {
+
+		// 수정
+		if (command.equals("/wishlist.wl")) {
 			System.out.println("C : /location.lo 호출");
 			System.out.println("C : 패턴 3 - DB사용O, 페이지 출력");
-			
-			action = new locationAction();
-			
-			try {
-				forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}else if (command.equals("/locationInsert.lo")) {
-			System.out.println("C : /locationInsert.lo 호출");
-			System.out.println("C : 패턴 1 - DB사용X, 페이지 출력");
-			
-			action = new locationInsert();
-			
-			try {
-				forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}else if (command.equals("/locationInsertAction.lo")) {
-			System.out.println("C : /locationInsert.lo 호출");
-			System.out.println("C : 패턴 3 - DB사용O, 페이지 출력");
-			
-			action = new locationInsertAction();
-			
-			try {
-				forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}else if (command.equals("/deleteLocation.lo")) {
-			System.out.println("C : /deleteLocation.lo 호출");
-			System.out.println("C : 패턴 3 - DB사용O, 페이지 출력");
-			
-			action = new locationDelete();
-			
+
+			action = new wishlistAction();
+
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
@@ -97,12 +65,14 @@ public class locationController extends HttpServlet {
 	}// doProcess
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doProcess(request, response);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doProcess(request, response);
 	}
 

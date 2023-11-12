@@ -1,4 +1,4 @@
-package com.ssb.location.action;
+package com.ssb.cart.action;
 
 import java.io.IOException;
 
@@ -11,9 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ssb.util.Action;
 import com.ssb.util.ActionForward;
-
-@WebServlet("*.lo")
-public class locationController extends HttpServlet {
+@WebServlet("*.ca")
+public class cartController extends HttpServlet {
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		/*********************** 1. 가상주소 계산 시작 **************************/
@@ -31,44 +30,22 @@ public class locationController extends HttpServlet {
 		ActionForward forward = null;
 		
 		//수정
-		 if (command.equals("/location.lo")) {
-			System.out.println("C : /location.lo 호출");
+		if (command.equals("/cartList.ca")) {
+			System.out.println("C : /cartList.ca 호출");
 			System.out.println("C : 패턴 3 - DB사용O, 페이지 출력");
 			
-			action = new locationAction();
-			
+			action = new cartAction();
+
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}else if (command.equals("/locationInsert.lo")) {
-			System.out.println("C : /locationInsert.lo 호출");
-			System.out.println("C : 패턴 1 - DB사용X, 페이지 출력");
-			
-			action = new locationInsert();
-			
-			try {
-				forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}else if (command.equals("/locationInsertAction.lo")) {
-			System.out.println("C : /locationInsert.lo 호출");
+		}else if (command.equals("/Order.ca")) {
+			System.out.println("C : /Order.ca 호출");
 			System.out.println("C : 패턴 3 - DB사용O, 페이지 출력");
 			
-			action = new locationInsertAction();
-			
-			try {
-				forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}else if (command.equals("/deleteLocation.lo")) {
-			System.out.println("C : /deleteLocation.lo 호출");
-			System.out.println("C : 패턴 3 - DB사용O, 페이지 출력");
-			
-			action = new locationDelete();
+			action = new orderAction();
 			
 			try {
 				forward = action.execute(request, response);
