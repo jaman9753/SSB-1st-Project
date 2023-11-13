@@ -18,9 +18,9 @@
 </head>
 <body>
 	<header>
-		
+		<jsp:include page="../Mcommon/top.jsp" />
 	</header>
-	<main>
+	<main style="padding-top: 200px;">
 		<!-- 참고:아이디 네임 변경하기 -->
 		<!-- 옵션 변경창(숨겨져있음) -->
 		<div id="optionSelecter" hidden="">
