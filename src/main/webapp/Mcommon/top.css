@@ -163,3 +163,9 @@ button {
 .search-input:focus + .search-button {
   display: block;
 }
+
+/* 메인 패딩 */
+
+main{
+	padding-top: 200px;
+}
