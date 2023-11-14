@@ -75,6 +75,24 @@ public class locationController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}else if (command.equals("/locationTest.lo")) {
+			System.out.println("C : /locationTest.lo 호출");
+			System.out.println("C : 패턴 1 - DB사용X, 페이지 출력");
+			
+			forward = new ActionForward();
+			forward.setPath("./location/locationTest.jsp");
+			forward.setRedirect(false);
+		}else if (command.equals("/locationPopup.lo")) {
+			System.out.println("C : /locationPopup.lo 호출");
+			System.out.println("C : 패턴 3 - DB사용O, 페이지 출력");
+			
+			action = new locationPopupAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		/*********************** 2. 가상주소 매핑 끝 **************************/

@@ -17,8 +17,8 @@
 		<table class="table">
 			<colgroup>
 				<col width="5%">
-				<col width="10%">
-				<col width="10%">
+				<col width="8%">
+				<col width="12%">
 				<col width="5%">
 				<col width="20%">
 				<col width="20%">
@@ -27,10 +27,10 @@
 			</colgroup>
 			<thead class="thead">
 				<tr>
-					<th>배송지ID</th>
-					<th>수취인이름</th>
-					<th>수취인전화번호</th>
-					<th>배송지우편번호</th>
+					<th></th>
+					<th>받는사람</th>
+					<th>전화번호</th>
+					<th>우편번호</th>
 					<th>주소</th>
 					<th>상세주소</th>
 					<th>배송지이름</th>
@@ -42,7 +42,7 @@
 					<tr>
 						<td><input type="radio" name="location_id" value="${dto.location_id}"></td>
 						<td>${dto.location_name}</td>
-						<td>${dto.location_phone}</td>
+						<td>${dto.location_phone.substring(0,3)}-${dto.location_phone.substring(3,7)}-${dto.location_phone.substring(7,11)}</td>
 						<td>${dto.location_postcode}</td>
 						<td>${dto.location_add}</td>
 						<td>${dto.locationD_add}</td>

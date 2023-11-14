@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -15,19 +15,19 @@
 	</header>
 	<main>
 	<div class="wishlist" value="7">
-		<img src="" alt="���ø���Ʈ">
+		<img src="" alt="위시리스트">
 	</div>
 	<div class="wishlist" value="8">
-		<img src="" alt="���ø���Ʈ">
+		<img src="" alt="위시리스트">
 	</div>
 	<div class="wishlist" value="9">
-		<img src="" alt="���ø���Ʈ">
+		<img src="" alt="위시리스트">
 	</div>
 	<div class="wishlist" value="10">
-		<img src="" alt="���ø���Ʈ">
+		<img src="" alt="위시리스트">
 	</div>
 	<div class="wishlist" value="11">
-		<img src="" alt="���ø���Ʈ">
+		<img src="" alt="위시리스트">
 	</div>
 		<table class="table">
 			<colgroup>
@@ -37,9 +37,9 @@
 			</colgroup>
 			<thead class="thead">
 				<tr>
-					<th>���ø���ƮID</th>
-					<th>��ǰID</th>
-					<th>ȸ��ID</th>
+					<th>위시리스트ID</th>
+					<th>제품ID</th>
+					<th>회원ID</th>
 				</tr>
 			</thead>
 			<tbody class="tbody">
