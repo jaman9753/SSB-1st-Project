@@ -15,7 +15,7 @@ public class locationAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// 받은정보저장
-		String member_id = request.getParameter("member_id");
+		String member_id = (String)request.getSession().getAttribute("member_id");
 		System.out.println("locationAction.member_id : " + member_id);
 		// 데이터 처리
 		locationDAO dao = new locationDAO();

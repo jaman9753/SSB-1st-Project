@@ -5,14 +5,16 @@
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="./location/locationPopup.js"></script>
+<script type="text/javascript" src="./Mcommon/util.js"></script>
 <link rel="stylesheet" href="./location/locationPopup.css">
 </head>
 <body>
 	<main>
 		<div class="insertPopup">
 			<h1>배송지 변경</h1>
-			<input type="button" value="배송지 추가(팝업)" onclick="insertPopup(1,-1)">
+			<input type="button" value="배송지 추가(팝업)" onclick="insertPopup(-1)">
 		</div>
 		<c:forEach var="dto" items="${dtoArray }">
 			<div class="locationItem">
@@ -24,8 +26,8 @@
 					(${dto.location_postcode}) ${dto.location_add}
 				</div>
 				<div class="locationItemButton"><!-- 버튼 -->
-					<input type="button" value="배송지 수정(팝업)" onclick="updatePopup('${dto.member_id}','${dto.location_id}')">
-					<input type="button" value="배송지 삭제(팝업)" onclick="updatePopup('${dto.member_id}','${dto.location_id}')">
+					<input type="button" value="배송지 수정(팝업)" onclick="updatePopup('${dto.location_id}')">
+					<input type="button" value="배송지 삭제(팝업)" onclick="deletePopup('${dto.location_id}')">
 					<input class="select" type="button" value="선택" onclick="">
 				</div>
 			</div>

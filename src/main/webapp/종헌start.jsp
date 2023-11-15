@@ -19,6 +19,7 @@
 	<script type="text/javascript">
 		function openWindow() {
 	        var popup = window.open("./locationPopup.lo?member_id=1", "ÆË¾÷", "width=600, height=1000");
+	        popup.document.getElementById("member_id").value
 	    }
 	</script>
 </body>

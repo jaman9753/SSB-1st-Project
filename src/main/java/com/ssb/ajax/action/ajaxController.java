@@ -54,7 +54,7 @@ public class ajaxController extends HttpServlet {
 		} else if (command.equals("/deleteCart.aj")) {
 			// 정보저장
 			String cart_id = request.getParameter("cart_id");
-			String member_id = request.getParameter("member_id");
+			String member_id = (String)request.getSession().getAttribute("member_id");
 			System.out.println("cart_id : " + cart_id);
 			System.out.println("member_id : " + member_id);
 			//정보처리
@@ -63,7 +63,7 @@ public class ajaxController extends HttpServlet {
 		} else if (command.equals("/insertWishlist.aj")) {
 			// 정보저장
 			String item_id = request.getParameter("item_id");
-			String member_id = request.getParameter("member_id");
+			String member_id = (String)request.getSession().getAttribute("member_id");
 			System.out.println("item_id : " + item_id);
 			System.out.println("member_id : " + member_id);
 			//정보처리
@@ -71,12 +71,13 @@ public class ajaxController extends HttpServlet {
 			json = gson.toJson(result);
 		} else if (command.equals("/getWishlist.aj")) {
 			// 정보저장
-			int member_id =Integer.parseInt(request.getParameter("member_id"));
+			int member_id = (int)request.getSession().getAttribute("member_id");
 			System.out.println("member_id : " + member_id);
 			//정보처리
 			ArrayList<Integer> result = dao.getWishlist(member_id);
 			json = gson.toJson(result);
 		}
+		
 		/*********************** 2. 가상주소 매핑 끝 **************************/
 
 		/*********************** 3. 가상주소 이동 시작 **************************/

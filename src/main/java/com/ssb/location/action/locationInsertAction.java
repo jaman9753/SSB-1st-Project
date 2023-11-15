@@ -3,6 +3,7 @@ package com.ssb.location.action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.ssb.location.db.locationDAO;
 import com.ssb.location.db.locationDTO;
 import com.ssb.util.Action;
@@ -13,6 +14,7 @@ public class locationInsertAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// 받은정보저장
+		Gson gson = new Gson();
 		locationDTO dto = new locationDTO();
 		boolean location_idCheck = request.getParameter("location_id").equals("");
 		int result;
@@ -28,7 +30,7 @@ public class locationInsertAction implements Action {
 		dto.setLocationD_add(request.getParameter("locationD_add"));
 		dto.setLocation_title(request.getParameter("location_title"));
 		dto.setLocation_requested(request.getParameter("location_requested"));
-		dto.setMember_id(Integer.parseInt(request.getParameter("member_id")));// 세션에서 받아오기
+		dto.setMember_id((int)request.getSession().getAttribute("member_id"));// 세션에서 받아오기
 		System.out.println(dto);
 		// 데이터 처리
 		locationDAO dao = new locationDAO();
@@ -38,12 +40,8 @@ public class locationInsertAction implements Action {
 			result = dao.insertLocation(dto);
 		}
 		System.out.println(result);
-		// 페이지 이동준비
-		ActionForward forward = new ActionForward();
-		forward.setPath("/location.lo?" + request.getParameter("member_id"));
-		forward.setRedirect(false);
-
-		return forward;
+		
+		return null;
 	}
 
 }

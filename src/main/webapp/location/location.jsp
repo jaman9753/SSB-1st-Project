@@ -3,10 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="./Mcommon/util.js"></script>
 <script src="./location/location.js"></script>
+<script type="text/javascript" src="./location/locationPopup.js"></script>
 <link rel="stylesheet" href="./location/location.css">
 </head>
 <body>
@@ -53,8 +55,7 @@
 			</tbody>
 		</table>
 		<div id="moveButton">
-			<input type="hidden" value="${dtoArray[0].member_id}" id="member_id">
-			<input type="button" value="배송지 추가" onclick="location.href='./locationInsert.lo?location_id=-1&member_id=1'">
+			<input type="button" value="배송지 추가" onclick="insertPopup('${userId}',-1)">
 			<input type="button" value="배송지 수정" onclick="selectLocation('locationInsert.lo')">
 			<input type="button" value="배송지 삭제" onclick="selectLocation('deleteLocation.lo')">
 		</div>

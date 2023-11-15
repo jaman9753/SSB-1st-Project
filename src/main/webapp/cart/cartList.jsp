@@ -14,6 +14,8 @@
 	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
 	crossorigin="anonymous"></script>
 <!-- 자바스크립트 외부파일 -->
+
+<script src="./Mcommon/util.js"></script>
 <script src="./cart/cartListJS.js"></script>
 </head>
 <body>

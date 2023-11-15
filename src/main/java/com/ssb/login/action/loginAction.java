@@ -40,6 +40,7 @@ public class loginAction implements Action {
 			// 아이디 정보를 세션에 저장2
 			HttpSession session = request.getSession();
 			session.setAttribute("userId", dto.getMember_user_id());
+			session.setAttribute("member_id", "1006");
 			
 			//response.sendRedirect(null);
 			forward = new ActionForward();

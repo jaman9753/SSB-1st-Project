@@ -1,12 +1,11 @@
 $(function() {
 	var wishlistDiv = document.querySelectorAll("div.wishlist");
-	var member_id = 1;
 	$.ajax({
 			type: "POST",
 			url: "./getWishlist.aj",
 			dataType: "text",
 			data: {
-				"member_id": member_id
+				
 			},
 			error: function() {
 				alert('통신실패!!');
@@ -26,15 +25,13 @@ $(function() {
 		});
 	$(".wishlist").click(function() {
 		var item_id = $(this).attr("value");
-		var member_id = 1;
 		$.ajax({
 			type: "POST",
 			url: "./insertWishlist.aj",
 			dataType: "text",
 			context: this,
 			data: {
-				"item_id": item_id,
-				"member_id": member_id
+				"item_id": item_id
 			},
 			error: function() {
 				alert('통신실패!!');

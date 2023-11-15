@@ -1,5 +1,8 @@
-<!-- header js 코드 영역 접어둠. -->
-	function toggleCategory() {
+/**
+ * top.jsp 공통 js
+ */
+ // 상단메뉴
+function toggleCategory() {
 		var categoryContent = document.querySelector('.category-content');
 		var brandContent = document.querySelector('.brand-content');
 
@@ -14,9 +17,10 @@
 		categoryContent.style.display = 'none';
 		brandContent.style.display = 'block';
 	}
+	
+// 상단 메뉴바 오픈 및 영역 확장
 
-<!-- 상단 메뉴바 오픈 및 영역 확장 js 코드 접어둠.-->
-	document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function() {
 
 		const submenus = document.querySelectorAll(".menu .submenu");
 		const submenuContents = document.querySelectorAll(".submenu-content");
@@ -39,3 +43,6 @@
 			});
 		});
 	});
+	
+	
+	

@@ -14,21 +14,6 @@
 		<jsp:include page="../Mcommon/top.jsp" />
 	</header>
 	<main>
-	<div class="wishlist" value="7">
-		<img src="" alt="위시리스트">
-	</div>
-	<div class="wishlist" value="8">
-		<img src="" alt="위시리스트">
-	</div>
-	<div class="wishlist" value="9">
-		<img src="" alt="위시리스트">
-	</div>
-	<div class="wishlist" value="10">
-		<img src="" alt="위시리스트">
-	</div>
-	<div class="wishlist" value="11">
-		<img src="" alt="위시리스트">
-	</div>
 		<table class="table">
 			<colgroup>
 				<col width="30%">
@@ -43,7 +28,7 @@
 				</tr>
 			</thead>
 			<tbody class="tbody">
-				<c:forEach var="dto" items="${dtoArray }">
+				<c:forEach var="dto" items="${dtoArray}">
 					<tr>
 						<td><input type="radio" name="location_id" value="${dto.location_id}"></td>
 						<td>${dto.wishlit_id}</td>
