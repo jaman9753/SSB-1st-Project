@@ -8,9 +8,7 @@ function updatePopup(location_id) {
 	window.open("./locationInsert.lo?location_id=" + location_id, "수정배송지", "width = 500, height = 600, top = 100, left = 200, location = no");
 }
 function deletePopup(location_id) {
-	if (!confirm("삭제하시겠습니까?")) {//삭제 시 재확인
-			return false;
-	}else{
+	if (confirm("삭제하시겠습니까?")) {//삭제 시 재확인
 		//페이지 이동
 		$.ajax({
 			type: "POST",
@@ -27,5 +25,12 @@ function deletePopup(location_id) {
 				location.reload();
 			}
 		});
+	}else{
+		return false;
 	}
+}
+function selectPopup(location_id){//배송지 선택시 부모창으로 값 넘기기
+	opener.document.getElementById("getPopup").value = location_id;
+	alert(location_id);
+    window.close();
 }

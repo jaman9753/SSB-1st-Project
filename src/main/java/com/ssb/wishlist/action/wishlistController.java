@@ -33,7 +33,7 @@ public class wishlistController extends HttpServlet {
 
 		// 수정
 		if (command.equals("/wishlist.wl")) {
-			System.out.println("C : /location.lo 호출");
+			System.out.println("C : /wishlist.wl 호출");
 			System.out.println("C : 패턴 3 - DB사용O, 페이지 출력");
 
 			action = new wishlistAction();

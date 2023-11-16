@@ -55,7 +55,7 @@
 			</tbody>
 		</table>
 		<div id="moveButton">
-			<input type="button" value="배송지 추가" onclick="insertPopup('${userId}',-1)">
+			<input type="button" value="배송지 추가" onclick="insertPopup(-1)">
 			<input type="button" value="배송지 수정" onclick="selectLocation('locationInsert.lo')">
 			<input type="button" value="배송지 삭제" onclick="selectLocation('deleteLocation.lo')">
 		</div>

@@ -14,32 +14,50 @@
 		<jsp:include page="../Mcommon/top.jsp" />
 	</header>
 	<main>
+		<div class="wishlist" value="7">
+			<img src="위시리스트이미지" alt="위시리스트">
+		</div>
+		<div class="wishlist" value="8">
+			<img src="위시리스트이미지" alt="위시리스트">
+		</div>
+		<div class="wishlist" value="9">
+			<img src="위시리스트이미지" alt="위시리스트">
+		</div>
+		<div class="wishlist" value="10">
+			<img src="위시리스트이미지" alt="위시리스트">
+		</div>
 		<table class="table">
 			<colgroup>
+				<col width="10%">
+				<col width="10%">
+				<col width="20%">
 				<col width="30%">
-				<col width="30%">
-				<col width="30%">
+				<col width="10%">
 			</colgroup>
 			<thead class="thead">
 				<tr>
-					<th>위시리스트ID</th>
+					<th><input type="checkbox" id="checkAll"></th>
 					<th>제품ID</th>
-					<th>회원ID</th>
+					<th>제품이름</th>
+					<th>제품이미지</th>
+					<th>가격</th>
 				</tr>
 			</thead>
 			<tbody class="tbody">
 				<c:forEach var="dto" items="${dtoArray}">
 					<tr>
-						<td><input type="radio" name="location_id" value="${dto.location_id}"></td>
-						<td>${dto.wishlit_id}</td>
+						<td><input type="checkbox" name="wishlist_id" value="${dto.wishlist_id}"></td>
 						<td>${dto.item_id}</td>
-						<td>${dto.member_id}</td>
+						<td>${dto.item_name}</td>
+						<td>${dto.item_img_main}</td>
+						<td>${dto.item_price}원</td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 		<div id="moveButton">
-		
+			<input type="hidden" id="checkArray" name="checkArray">
+			<input type="button" value="삭제" onclick="deleteCart()">
 		</div>
 	</main>
 	<footer> </footer>

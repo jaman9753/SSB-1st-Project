@@ -28,7 +28,7 @@
 				<div class="locationItemButton"><!-- 버튼 -->
 					<input type="button" value="배송지 수정(팝업)" onclick="updatePopup('${dto.location_id}')">
 					<input type="button" value="배송지 삭제(팝업)" onclick="deletePopup('${dto.location_id}')">
-					<input class="select" type="button" value="선택" onclick="">
+					<input class="select" type="button" value="선택" onclick="selectPopup('${dto.location_id}')">
 				</div>
 			</div>
 		</c:forEach>

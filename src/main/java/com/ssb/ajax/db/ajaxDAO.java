@@ -78,21 +78,22 @@ public class ajaxDAO extends DAO {
 		String result = null;
 		try {
 			con = getCon();
-			sql = "SELECT * FROM wishlist WHERE item_id = ? AND member_id = ?";
+			sql = "SELECT * FROM wishlist WHERE item_id IN("+ item_id +") AND member_id = ?";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, item_id);
-			pstmt.setString(2, member_id);
+			pstmt.setString(1, member_id);
 			System.out.println(pstmt);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				sql = "DELETE FROM wishlist WHERE wishlist_id = ?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, rs.getInt("wishlist_id"));
-				System.out.println(pstmt);
-				if(pstmt.executeUpdate() == 1) {
-					result = "deleted";
-				}else{
-					result = "deletedFail";
+				while (rs.next()) {
+					sql = "DELETE FROM wishlist WHERE wishlist_id = ?";
+					pstmt = con.prepareStatement(sql);
+					pstmt.setInt(1, rs.getInt("wishlist_id"));
+					System.out.println(pstmt);
+					if(pstmt.executeUpdate() == 1) {
+						result = "deleted";
+					}else{
+						result = "deletedFail";
+					}
 				}
 			}else {
 				sql = "INSERT INTO wishlist VALUES(DEFAULT,?,?)";

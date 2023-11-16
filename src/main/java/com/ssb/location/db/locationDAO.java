@@ -91,14 +91,14 @@ public class locationDAO extends DAO{
 	}
 	
 	//배송지 수정 페이지 이동 메서드
-	public locationDTO getReWrite(int location_id, int member_id) {
+	public locationDTO getReWrite(int location_id, String member_id) {
 		locationDTO dto = null;
 		try {
 			con = getCon();
 			sql = "SELECT * FROM location WHERE location_id = ? AND member_id = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, location_id);
-			pstmt.setInt(2, member_id);
+			pstmt.setInt(2, Integer.parseInt(member_id));
 			System.out.println("전송된 쿼리 : " + pstmt);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {

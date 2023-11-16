@@ -54,7 +54,7 @@ public class locationController extends HttpServlet {
 				e.printStackTrace();
 			}
 		}else if (command.equals("/locationInsertAction.lo")) {
-			System.out.println("C : /locationInsert.lo 호출");
+			System.out.println("C : /locationInsertAction.lo 호출");
 			System.out.println("C : 패턴 3 - DB사용O, 페이지 출력");
 			
 			action = new locationInsertAction();

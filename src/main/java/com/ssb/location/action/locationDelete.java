@@ -13,7 +13,7 @@ public class locationDelete implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// 받은정보저장
 		int location_id = Integer.parseInt(request.getParameter("location_id"));
-		int member_id = (int)request.getSession().getAttribute("member_id");
+		int member_id = Integer.parseInt((String)request.getSession().getAttribute("member_id"));
 		System.out.println(location_id);
 		System.out.println(member_id);
 		// 데이터 처리

@@ -71,7 +71,7 @@ public class ajaxController extends HttpServlet {
 			json = gson.toJson(result);
 		} else if (command.equals("/getWishlist.aj")) {
 			// 정보저장
-			int member_id = (int)request.getSession().getAttribute("member_id");
+			int member_id = Integer.parseInt((String)request.getSession().getAttribute("member_id"));
 			System.out.println("member_id : " + member_id);
 			//정보처리
 			ArrayList<Integer> result = dao.getWishlist(member_id);

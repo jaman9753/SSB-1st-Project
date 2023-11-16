@@ -14,7 +14,9 @@ public class locationInsert implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// 받은정보저장
 		int location_id = Integer.parseInt(request.getParameter("location_id"));
-		int member_id = (int)request.getSession().getAttribute("member_id");
+		String member_id = (String)request.getSession().getAttribute("member_id");
+		System.out.println(member_id);
+		System.out.println(location_id);
 		// 데이터 처리
 		locationDAO dao = new locationDAO();
 		if (location_id != -1) {

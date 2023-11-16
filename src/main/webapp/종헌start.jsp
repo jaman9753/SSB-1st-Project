@@ -11,15 +11,19 @@
 
 	MVC 프로젝트의 시작지점
 	
-	<input type="button" value="장바구니" onclick="location.href='./cartList.ca?member_id=1'">
-	<input type="button" value="배송지" onclick="location.href='./location.lo?member_id=1'">
-	<input type="button" value="위시리스트" onclick="location.href='./wishlist.wl?member_id=1'">
+	<input type="button" value="장바구니" onclick="location.href='./cartList.ca?'">
+	<input type="button" value="배송지" onclick="location.href='./location.lo?'">
+	<input type="button" value="위시리스트" onclick="location.href='./wishlist.wl?'">
 	<input type="button" value="테스트" onclick="location.href='./locationTest.lo'">
 	<input type="button" value="팝업" onclick="openWindow()">
+	<input type="text" id="getPopup" value="1">
+	<input type="radio" value="1" name="getPopup">1
+	<input type="radio" value="2" name="getPopup">2
+	<input type="radio" value="3" name="getPopup">3
+	<input type="radio" value="4" name="getPopup">4
 	<script type="text/javascript">
 		function openWindow() {
-	        var popup = window.open("./locationPopup.lo?member_id=1", "팝업", "width=600, height=1000");
-	        popup.document.getElementById("member_id").value
+	        var popup = window.open("./locationPopup.lo", "팝업", "width=600, height=1000");
 	    }
 	</script>
 </body>

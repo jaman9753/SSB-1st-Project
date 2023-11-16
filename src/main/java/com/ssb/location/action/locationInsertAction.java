@@ -30,7 +30,7 @@ public class locationInsertAction implements Action {
 		dto.setLocationD_add(request.getParameter("locationD_add"));
 		dto.setLocation_title(request.getParameter("location_title"));
 		dto.setLocation_requested(request.getParameter("location_requested"));
-		dto.setMember_id((int)request.getSession().getAttribute("member_id"));// 세션에서 받아오기
+		dto.setMember_id(Integer.parseInt((String)request.getSession().getAttribute("member_id")));// 세션에서 받아오기
 		System.out.println(dto);
 		// 데이터 처리
 		locationDAO dao = new locationDAO();
