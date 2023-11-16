@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="./wishlist/wishlist.js"></script>
+<script type="text/javascript" src="./wishlist/wishlistPage.js"></script>
 <link rel="stylesheet" href="./location/location.css">
 </head>
 <body>
@@ -46,7 +47,7 @@
 			<tbody class="tbody">
 				<c:forEach var="dto" items="${dtoArray}">
 					<tr>
-						<td><input type="checkbox" name="wishlist_id" value="${dto.wishlist_id}"></td>
+						<td><input type="checkbox" name="wishlist_id" value="${dto.item_id}"></td>
 						<td>${dto.item_id}</td>
 						<td>${dto.item_name}</td>
 						<td>${dto.item_img_main}</td>
@@ -57,7 +58,7 @@
 		</table>
 		<div id="moveButton">
 			<input type="hidden" id="checkArray" name="checkArray">
-			<input type="button" value="삭제" onclick="deleteCart()">
+			<input type="button" value="삭제" onclick="deleteWishlist()">
 		</div>
 	</main>
 	<footer> </footer>

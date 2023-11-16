@@ -1,6 +1,7 @@
 package com.ssb.wishlist.action;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,8 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.ssb.util.Action;
 import com.ssb.util.ActionForward;
+import com.ssb.wishlist.db.wishlistDAO;
 
 @WebServlet("*.wl")
 public class wishlistController extends HttpServlet {
@@ -30,6 +33,9 @@ public class wishlistController extends HttpServlet {
 		System.out.println("C : 2. 가상주소 매핑 시작------------------");
 		Action action = null;
 		ActionForward forward = null;
+		Gson gson = new Gson();
+		String json = null;
+		wishlistDAO dao;
 
 		// 수정
 		if (command.equals("/wishlist.wl")) {
@@ -43,6 +49,34 @@ public class wishlistController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}else if (command.equals("/switchWishlist.wl")) {
+			// 정보저장
+			String item_id = request.getParameter("item_id");
+			String member_id = (String)request.getSession().getAttribute("member_id");
+			System.out.println("item_id : " + item_id);
+			System.out.println("member_id : " + member_id);
+			//정보처리
+			dao = new wishlistDAO();
+			String result = dao.switchWishlist(item_id,member_id);
+			json = gson.toJson(result);
+		}else if (command.equals("/getWishlist.wl")) {
+			// 정보저장
+			int member_id = Integer.parseInt((String)request.getSession().getAttribute("member_id"));
+			System.out.println("member_id : " + member_id);
+			dao = new wishlistDAO();
+			//정보처리
+			ArrayList<Integer> result = dao.getWishlist(member_id);
+			json = gson.toJson(result);
+		}else if (command.equals("/deleteWishlist.wl")) {
+			// 정보저장
+			int member_id = Integer.parseInt((String)request.getSession().getAttribute("member_id"));
+			String item_idArr = request.getParameter("item_idArr");
+			System.out.println("member_id : " + member_id);
+			System.out.println("item_idArr : " + item_idArr);
+			dao = new wishlistDAO();
+			//정보처리
+			int result = dao.deleteWishlist(item_idArr,member_id);
+			json = gson.toJson(result);
 		}
 
 		/*********************** 2. 가상주소 매핑 끝 **************************/
@@ -59,6 +93,10 @@ public class wishlistController extends HttpServlet {
 				RequestDispatcher dis = request.getRequestDispatcher(forward.getPath());
 				dis.forward(request, response);
 			}
+		}else if(json != null) {
+			response.setCharacterEncoding("utf-8");
+			response.setContentType("application/json; charset=utf-8");
+			response.getWriter().print(json);
 		}
 		/*********************** 3. 가상주소 이동 끝 **************************/
 
