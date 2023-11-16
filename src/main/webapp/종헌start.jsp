@@ -11,9 +11,9 @@
 
 	MVC 프로젝트의 시작지점
 	
-	<input type="button" value="장바구니" onclick="location.href='./cartList.ca?'">
-	<input type="button" value="배송지" onclick="location.href='./location.lo?'">
-	<input type="button" value="위시리스트" onclick="location.href='./wishlist.wl?'">
+	<input type="button" value="장바구니" onclick="location.href='./cartList.ca'">
+	<input type="button" value="배송지" onclick="location.href='./location.lo'">
+	<input type="button" value="위시리스트" onclick="location.href='./wishlist.wl'">
 	<input type="button" value="테스트" onclick="location.href='./locationTest.lo'">
 	<input type="button" value="팝업" onclick="openWindow()">
 	<input type="text" id="getPopup" value="1">

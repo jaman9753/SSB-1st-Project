@@ -6,7 +6,7 @@ $(function() {
 		url: "./getWishlist.wl",
 		dataType: "text",
 		data: {
-
+			
 		},
 		error: function() {
 			alert('통신실패!!');
@@ -18,7 +18,7 @@ $(function() {
 				value = wishlistDiv[i].getAttribute('value');
 				item_idArr.find(function(element) {
 					if (element == value) {
-						$('div[value=' + value + ']').html("<img src='' alt='inserted'>");//img src 변경
+						$('.wishlist[value=' + value + ']').html("<img src='' alt='inserted'>");//img src 변경
 					}
 				});
 			}
